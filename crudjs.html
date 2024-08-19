@@ -1,0 +1,114 @@
+<html>
+
+<head>
+    <title>Employee List</title>
+    <link rel="stylesheet" href="crudjs.css" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+
+<body class="body">
+    <h1 class="h1">Employee Data</h1>
+
+    <!-- add form -->
+    <div class="overlay" id="overlay"></div>
+    <div class="modalAdd" id="modalAdd">
+        <span onclick="closeModalAdd()" class="closeModalAdd">&times;</span>
+        <h1>User Details</h1>
+
+        <!-- add new data form -->
+        <form action="#" id="myForm">
+
+         
+            <input type="text" name="" id="name" placeholder="Enter Name" required />
+            <div>
+                <label for="imgInput">
+                    <input type="file" id="uploadImg" required/>
+                </label>
+                <img id="showImg" src="./image/Profile Icon.webp" alt="image" width="200" height="180" />
+            </div>
+            <!-- <label for="SNo">E-Mail:</label> -->
+            <input type="text" name="" id="email" placeholder="E-Mail" required/>
+            <!-- <label for="SNo">Phone</label> -->
+            <input type="number" name="" id="phone" placeholder="Phone"  minlength="10" maxlength="13" required/>
+        </form>
+        <button type="submit" class="newUserBtn"  form="myForm" id="addNewUserBtn">
+            Add
+        </button>
+    </div>
+Update
+    <div class="container" id="container">
+        <!-- top buttons -->
+        <div class="container1">
+            <button class="addBtn" id="addBtn" data-bs-target="#userForm" onclick="showModal()">
+                Add Data <i class="fa-solid fa-user-plus"> </i>
+            </button>
+            <button class="delAllBtn" id="delAllBtn" onclick="deleteAll()">
+                Delete All <i class="fa-regular fa-trash-can"></i>
+            </button>
+            <input type="search" class="searchbox" placeholder="Search" id="searchbox" /><i
+                class="fa-solid fa-magnifying-glass"></i>
+        </div>
+
+        <div class="container2" id="container2">
+            <!-- table showdata -->
+            <table cellspacing="5" cellpadding="4" class="table" id="table">
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Name</th>
+                        <th>Image</th>
+                        <!-- <th>Age</th> -->
+                        <th>E-mail</th>
+                        <th>Phone</th>
+                        <!-- <th>Start Date</th> -->
+                        <th>Update</th>
+                    </tr>
+                </thead>
+                <tbody id="tbody">
+                    <!-- <tr >
+                        <td>SNo1</td>
+                        <td>Abhishek Singh Mahara</td>
+                        <td class="imgbox">
+                            <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bWFuJTIwcG9ydHJhaXR8ZW58MHx8MHx8fDA%3D"
+                                alt="profile" width="120" height="150" />
+                        </td>
+                        <td>abc@32</td>
+                        <td>4352432</td>
+                        <td>
+                            <button class="edit">
+                                <i class="fa-regular fa-pen-to-square"></i></button><button class="delete">
+                                <i class="fa-solid fa-user-minus"></i>
+                            </button>
+                        </td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- <div class="modalAdd">
+            <h1>User Details</h1>
+           <form>
+            
+            <label for="SNo">S.No:</label>
+            <input type="text" /><br>
+            <label for="Name">Name:</label>
+            <input type="text" /><br>
+            <label for="image">Image:</label>
+            <input type="file" /><br>
+            <label for="SNo">E-Mail:</label>
+            <input type="text" /><br>
+            <label for="SNo">Phone</label>
+            <input type="number" /><br>
+            <button class="addBtn">Add</button>
+           </form>
+        </div>  -->
+    </div>
+    <script src="crudjs.js"></script>
+</body>
+
+</html>
