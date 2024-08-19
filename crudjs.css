@@ -1,0 +1,277 @@
+* {
+    text-align: center;
+    margin: 0;
+    padding: 0;
+}
+
+.h1{
+    color: white;
+    display: flex;
+    background-color: rgba(0, 0, 0, 0.674);
+    padding: 20px;
+    height: 70px;
+    justify-content: center;
+    box-shadow: 1px 5px 5px 3px black;
+}
+
+body.body {
+    text-align: center;
+    position: relative;
+    background: linear-gradient(to bottom, rgb(237, 112, 208), rgba(0, 0, 255, 0.553));
+}
+
+.container1 {
+    margin: 70px;
+    margin-top: 1px;
+    background-color: rgba(0, 0, 0, 0.402);
+    border-radius: 5px;
+    box-shadow: 10px 5px 10px rgb(37, 21, 21);
+    display: flex;
+    /* margin: 20px; */
+    justify-content: center;
+    align-items: center;
+    padding: 30px;
+    margin: 60px;
+    flex-direction: row;
+}
+
+.searchbox {
+    margin: 20px;
+    height: 60px;
+    width: 400px;
+    border-radius: 5px;
+    font-size: x-large;
+    text-align: end;
+    outline: none;
+    background-color: rgb(237, 112, 208);
+}
+
+.container2 {
+    margin: 70px;
+    margin-top: 1px;
+    background-color: rgba(255, 255, 255, 0.379);
+    margin-top: 3em;
+    padding: 30px;
+    box-shadow: 5px 10px 10px rgba(0, 0, 0, 0.546);
+
+}
+
+
+button {
+    border: none;
+    font-size: x-large;
+    /* text-align: center; */
+    transition-duration: 0.4s;
+    cursor: pointer;
+    /* display: inline block; */
+    margin: 0px;
+    padding: 10px;
+}
+
+.addBtn {
+    border: 1px solid rgb(82, 150, 82);
+    border-right: none;
+    width: 180px;
+    height: 60px;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.addBtn:hover {
+    background-color: rgb(82, 150, 82);
+    color: white;
+}
+
+.addBtn:active {
+    background-color: white;
+}
+
+.delAllBtn {
+    border: 1px solid rgba(226, 63, 63, 0.774);
+    width: 180px;
+    height: 60px;
+    border-radius: 0px 5px 5px 0px;
+    border-left:none;
+}
+
+.delAllBtn:hover {
+    background-color: rgba(226, 63, 63, 0.774);
+    color: white;
+}
+
+.delAllBtn:active {
+    background-color: white;
+}
+
+.edit {
+    border: 4px solid rgba(221, 211, 24, 0.881);
+    border-right: none;
+    border-radius: 5px 0px 0px 5px;
+}
+
+.edit:hover {
+    background-color: rgba(221, 211, 24, 0.864);
+    color: white;
+}
+
+.edit:active {
+    background-color: white;
+}
+
+.delete {
+    border: 4px solid rgba(226, 63, 63, 0.774);
+    border-radius: 0px 5px 5px 0px;
+    border-left: none;
+}
+
+.delete:hover {
+    background-color: rgba(226, 63, 63, 0.774);
+    color: white;
+}
+
+.delete:active {
+    background-color: white;
+}
+
+.table,
+th,
+tr {
+    border: 2px solid white;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    padding: 15px; 
+}
+
+.imgbox{
+    overflow: hidden;
+}
+
+.imgbox img{
+    transition: all ease 0.3s;
+    overflow: hidden;
+}
+
+.imgbox img:hover{
+    scale: 1.4;
+}
+
+th {
+    font-size: x-large;
+}
+
+tr,
+td {
+    border: 1.5px solid black;
+    border-radius: 5px;
+    padding: 15px;
+    margin: auto;
+}
+
+tr:nth-child(even) {
+    background-color: rgba(81, 65, 81, 0.2);
+}
+
+tr:hover {
+    background-color: rgba(167, 140, 131, 0.355);
+}
+
+img {
+    border-radius: 5px;
+}
+
+.overlay{
+    top: 0;
+    position: fixed;
+    z-index: -1;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.418);
+    opacity: 0;
+    transition: 0.1s;
+}
+
+.showOverlay{
+      opacity: 1;
+      z-index: 1;
+     backdrop-filter: blur(5px);
+}
+
+.modalAdd{
+    /* margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    font-size: 1.5em;
+    color: rgb(126, 125, 130);
+    width: 50%; */
+    /* display: none; */
+    background-color: rgba(233, 227, 227, 1);
+    padding: 20px;
+    width: 0px;
+    position: absolute;
+    left: 50%;
+    top: -50%;
+    transform: translate(-50%,-50%);
+    /* box-shadow: 0px 0px 10px 10px white; */
+    box-shadow: 2px 2px 10px  rgba(255, 255, 255, 0.614);
+    transition: 0.1s;
+    border-radius: 5px 0px 5px 5px;
+}
+.showModalAdd{
+    top: 350px;
+    z-index: 1;
+    position: fixed;
+    width: 300px;
+}
+.modalAdd span{
+    /* float: right; */
+    position: fixed;
+    right: 0;
+    top: 0;
+    background-color: black;
+    cursor: pointer;
+    color: white;
+    padding: 4px;
+    width: 20px;
+   transition: 0.1s;
+}
+.modalAdd span:hover{
+    background-color:brown;
+}
+
+.newUserBtn{
+    border: 1px solid rgb(3, 3, 3);
+    background-color: black;
+    color: white;
+    /* border-right: none; */
+    width: 100%;
+    height: 40px;
+    border-radius: 5px ;
+    padding: 2px;
+    margin-top: 0.5em;
+}
+.newUserBtn:hover {
+    background-color: rgb(251, 252, 251);
+    color: rgb(10, 6, 6);
+}
+
+.newUserBtn:active {
+    background-color: rgb(19, 16, 16);
+}
+.modalAdd input{
+    border: 4px solid rgb(12, 11, 35);
+    display: block;
+    width: 100%;
+    font-size:1rem;
+    padding: 5px;
+     /* outline: none; */
+     border-radius: 5px;
+     border-top: none;
+     border-right: none;
+     margin: 5px;
+}
+.modalAdd label{
+    font-style: italic;
+    font-weight: bold;
+    color: rgb(59, 59, 43);
+}
