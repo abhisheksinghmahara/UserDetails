@@ -27,20 +27,23 @@
             <input type="text" name="" id="name" placeholder="Enter Name" required />
             <div>
                 <label for="imgInput">
-                    <input type="file" id="uploadImg" required/>
+                    <input type="file" id="uploadImg" />
                 </label>
                 <img id="showImg" src="./image/Profile Icon.webp" alt="image" width="200" height="180" />
             </div>
             <!-- <label for="SNo">E-Mail:</label> -->
+            <input type="text" name="" id="age" placeholder="Age" required/>
             <input type="text" name="" id="email" placeholder="E-Mail" required/>
             <!-- <label for="SNo">Phone</label> -->
             <input type="number" name="" id="phone" placeholder="Phone"  minlength="10" maxlength="13" required/>
+            <input type="text" name="" id="post" placeholder="Post" required/>
+            <input type="date" name="" id="date" required>
+
         </form>
         <button type="submit" class="newUserBtn"  form="myForm" id="addNewUserBtn">
             Add
         </button>
     </div>
-Update
     <div class="container" id="container">
         <!-- top buttons -->
         <div class="container1">
@@ -50,22 +53,23 @@ Update
             <button class="delAllBtn" id="delAllBtn" onclick="deleteAll()">
                 Delete All <i class="fa-regular fa-trash-can"></i>
             </button>
-            <input type="search" class="searchbox" placeholder="Search" id="searchbox" /><i
+            <input type="search" class="searchbox" placeholder="Search"  oninput="loadFunction()" id="searchbox" /><i
                 class="fa-solid fa-magnifying-glass"></i>
         </div>
 
         <div class="container2" id="container2">
             <!-- table showdata -->
-            <table cellspacing="5" cellpadding="4" class="table" id="table">
+            <table cellspacing="5" cellpadding="4" class="table table-responsive" id="table">
                 <thead>
                     <tr>
                         <th>S.No.</th>
                         <th>Name</th>
                         <th>Image</th>
-                        <!-- <th>Age</th> -->
+                        <th>Age</th>
                         <th>E-mail</th>
                         <th>Phone</th>
-                        <!-- <th>Start Date</th> -->
+                        <th>Post</th>
+                        <th>Start Date</th>
                         <th>Update</th>
                     </tr>
                 </thead>
