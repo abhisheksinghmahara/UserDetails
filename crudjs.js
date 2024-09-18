@@ -1,3 +1,4 @@
+"use strict";
 const form = document.getElementById("myForm");
 const uploadedImg = document.getElementById("uploadImg");
 const showImg = document.getElementById("showImg");
@@ -8,47 +9,127 @@ const phone = document.getElementById("phone");
 const post = document.getElementById("post");
 const sdate = document.getElementById("date");
 const submitBtn = document.getElementById("addNewUserBtn");
-// const userInfo = document.getElementById("data");
 const modal = document.getElementById("userForm");
 const searchElement = document.getElementById("searchbox");
 const modalTitle = document.querySelector("#userForm .modal-title");
-// const newUserBtn = document.getElementById("addNewUserBtn");
 const modalAdd = document.getElementById("modalAdd");
 const t_Body = document.getElementById("tbody");
 const overlay = document.querySelector(".overlay");
 const editBtn = document.getElementsByClassName("edit");
+const pageNo=document.getElementById("paginationButtons");
+const description=document.getElementById("description");
+
 let data = [];
-// console.log("data before",data);
+let filteredData=[];
+let dataSkip=0,loadData=4;
+  let currentPage=1,pages=1;
+  
+// console.log("data:",data);
 if (localStorage.getItem("userProfile") != null) {
   data = JSON.parse(localStorage.getItem("userProfile"));
+  // console.log("data:",data);
+  filteredData=[...data];
+  // console.log("fitleredData:",filteredData);
+  pages=Math.ceil(data.length/4);
 }
-// getData();
-function getData() {
+// getData(0,4);
+function getData(skip, load) {
+  const dataToDisplay = searchElement.value ? filteredData : data;
+  const filter = dataToDisplay.slice(skip, load);
   t_Body.innerHTML = "";
-  data.forEach((data, index) => {
+  description.innerHTML = `Data from ${1 + skip} to ${load}`;
+
+  filter.forEach((item, index) => {
+    index += (+skip);
     t_Body.innerHTML += `
-      
-                          <tr key='${index}'>
-                              <td>${index + 1}</td>
-                              <td>${data.name}</td>
-                              <td class="imgbox">
-                                  <img src="${data.picture}"
-                                      alt="profile" width="120" height="150" />
-                              </td>
-                              <td>${data.age}</td>
-                              <td>${data.mail}</td>
-                              <td>${data.phone}</td>
-                              <td>${data.post}</td>
-                              <td>${data.startDate}</td>
-                              <td>
-                                  <button id="${index}" class="edit"><i class="fa-regular fa-pen-to-square"></i></button>
-                                  <button id="${index}" class="delete"><i class="fa-solid fa-user-minus"></i></button>
-                              </td>
-                          </tr>
-                   `;
+      <tr key='${index}'>
+        <td class="imgbox">
+          <img src="${item.picture}" alt="profile" width="50" height="56" />
+        </td>
+        <td>${item.name}</td>
+        <td>${item.age}</td>
+        <td>${item.mail}</td>
+        <td>${item.phone}</td>
+        <td>${item.post}</td>
+        <td>${item.startDate}</td>
+        <td>
+          <i id="${index}" class="edit fa-regular fa-pen-to-square"></i>
+          <i id="${index}" class="delete fa-solid fa-user-minus"></i>
+        </td>
+      </tr>
+    `;
   });
   action();
+  handlePaginationButtons();  // Update pagination buttons state
 }
+
+// Handle disabling of pagination buttons
+function handlePaginationButtons() {
+  const prevButton = document.querySelector(".navigate[onclick='prev()']");
+  const nextButton = document.querySelector(".navigate[onclick='next()']");
+
+  prevButton.disabled = currentPage === 1;
+  nextButton.disabled = currentPage === pages;
+  updateActivePageButton();
+}
+
+// Update the active pagination button
+function updateActivePageButton() {
+  const allPaginationButtons = pageNo.querySelectorAll("#paginate");
+
+  allPaginationButtons.forEach((btn, index) => {
+    btn.classList.remove("active");
+    // console.log("btn:",btn)
+    // console.log("index",index)
+    // console.log(index+1,currentPage)
+    if (index + 1 === currentPage) {
+      btn.classList.add("active");
+    }
+  });
+}
+
+function next() {
+  const nextButton = document.querySelector(".navigate[onclick='next()']");
+  const prevButton = document.querySelector(".navigate[onclick='prev()']");
+
+  if (currentPage < pages) {
+    currentPage++;
+    const skip = (currentPage - 1) * 4;
+    getData(skip, skip + 4);
+  }
+  
+  // Re-enable prev button as soon as we move forward
+  prevButton.disabled = currentPage === 1 ? true : false;
+  
+  // Disable next button on the last page
+  nextButton.disabled = currentPage === pages;
+}
+
+function prev() {
+  const prevButton = document.querySelector(".navigate[onclick='prev()']");
+  const nextButton = document.querySelector(".navigate[onclick='next()']");
+
+  if (currentPage > 1) {
+    currentPage--;
+    const skip = (currentPage - 1) * 4;
+    getData(skip, skip + 4);
+  }
+
+  // Disable prev button if we're back to the first page
+  prevButton.disabled = currentPage === 1;
+
+  // Re-enable the next button as soon as we move back from the last page
+  nextButton.disabled = currentPage === pages ? true : false;
+}
+
+
+
+// Initialize display on page load
+// Initialize display on page load
+getData(0, 4);
+handlePaginationButtons();  // To set initial button states
+
+
 
 // getData(data);
 // console.log("data later",data);
@@ -113,13 +194,19 @@ form.addEventListener("submit", (e) => {
     // adding data to local storage of browser
     localStorage.setItem("userProfile", JSON.stringify(data));
     closeModalAdd();
-    getData();
+    getData(0,4);
     form.reset();
     uploadedImg.value = "";
     showImg.src = "./image/Profile Icon.webp";
-    swal("Data inserted", "New Employee Added Successfully", "success");
+    swal("Data inserted", "New Employee Added Successfully", "success")
+        .then(() => {
+          location.reload();
+        });
+    // swal("Data inserted", "New Employee Added Successfully", "success").then(  location.reload());
   } else {
-    swal("failed", "Entered email  already exists", "warning");
+    swal("failed", "Entered email  already exists", "warning").then(() => {
+      location.reload();
+    });
   }
 });
 
@@ -132,13 +219,14 @@ function deleteAll() {
       data = [];
       localStorage.setItem("userProfile", JSON.stringify(data));
       getData();
+      location.reload()
     }
   };
 }
 
 // actions---> delete oneitem and update
 function action() {
-  // delete on data
+  // delete one data
   let deletebuttons = t_Body.querySelectorAll(".delete");
   for (let btn of deletebuttons) {
     btn.onclick = async () => {
@@ -148,7 +236,8 @@ function action() {
         // console.log(index);
         data.splice(index, 1);
         localStorage.setItem("userProfile", JSON.stringify(data));
-        getData();
+        getData(0,4);
+        location.reload();
       }
     };
   }
@@ -197,8 +286,8 @@ function action() {
         };
         let countMail = 0;
         data.find((res) => {
-          console.log("res", res.mail);
-          console.log("data", data[index].mail);
+          // console.log("res", res.mail);
+          // console.log("data", data[index].mail);
 
           if (res.mail == data[index].mail) {
             countMail++;
@@ -207,7 +296,7 @@ function action() {
         if (countMail <= 1) {
           localStorage.setItem("userProfile", JSON.stringify(data));
           closeModalAdd();
-          getData();
+          getData(0,4);
           form.reset();
           uploadedImg.value = "";
           showImg.src = "./image/Profile Icon.webp";
@@ -215,7 +304,9 @@ function action() {
             "Data Edited",
             `Some details of ${data[index].name} Updated Successfully`,
             "success"
-          );
+          ).then(() => {
+            location.reload();
+          });
         } else if (countMail > 1) {
           swal("failed", "Entered email already exists", "warning");
         }
@@ -229,7 +320,7 @@ const confirm = () => {
   return new Promise((resolve, reject) => {
     swal({
       title: "Are you sure?",
-      text: "You will not be able to recover this imaginary file!",
+      text: "You will not be able to recover this data!",
       icon: "warning", // 'type' is replaced with 'icon'
       buttons: {
         cancel: {
@@ -248,10 +339,10 @@ const confirm = () => {
     })
       .then((isConfirm) => {
         if (isConfirm) {
-          swal("Deleted!", "Your imaginary file has been deleted.", "success");
+          swal("Deleted!", "Your data has been deleted.", "success");
           resolve(true);
         } else {
-          swal("Cancelled", "Your imaginary file is safe :)", "error");
+          swal("Cancelled", "Your data is safe :)", "error");
           reject(true);
         }
       })
@@ -261,38 +352,72 @@ const confirm = () => {
       });
   });
 };
-getData();
+getData(0,4);
 
+
+// search data 
 function findData() {
-  let searched = searchElement.value;
-  let tr = t_Body.querySelectorAll("tr");
-  for (let i = 0; i < data.length; i++) {
-    let name = data[i].name;
-    let email = data[i].mail;
-    let post = data[i].post;
-    if (name.toLocaleLowerCase().indexOf(searched) != -1) {
-      tr[i].style.display = "";
-    } else if (email.toLocaleLowerCase().indexOf(searched) != -1) {
-      tr[i].style.display = "";
-    } else if (post.toLocaleLowerCase().indexOf(searched) != -1) {
-      tr[i].style.display = "";
-    }else{
-      tr[i].style.display="none";
+  const searched = searchElement.value.toLowerCase();
+  filteredData = data.filter(item =>
+    item.name.toLowerCase().includes(searched) ||
+    item.post.toLowerCase().includes(searched) ||
+    item.mail.toLowerCase().includes(searched)  // Include other fields as needed
+  );
 
-    }
-  }
+  pages = Math.ceil(filteredData.length / 4);  // Recalculate pages based on filtered data
+  currentPage = 1;  // Reset to the first page after search
+  displayIndexBtn();  // Update pagination buttons
+  getData(0, 4);  // Load data for the first page of the filtered results
 }
 
-function doSomeMagic(fun, delay) {
+
+function doSomeMagic(findData, delay) {
   let timer;
   return () => {
-    let context = this,
-      args = arguments;
     clearTimeout(timer);
     timer = setTimeout(() => {
-      findData.apply(context, arguments);
+      findData();
     }, delay);
   };
 }
 
 const loadFunction = doSomeMagic(findData, 500);
+
+
+//pagination
+
+function displayIndexBtn() {
+  // Clear any previous buttons
+  pageNo.innerHTML = "";
+  dataSkip = 0;
+  loadData = 4;
+
+  // Dynamically create pagination buttons based on the number of pages
+  for (let i = 1; i <= pages; i++) {
+    pageNo.innerHTML += `
+      <button id="paginate" data-skip="${dataSkip}" load-data="${loadData}" index="${i}" class="${i === currentPage ? 'active' : ''}" onclick="paginate(${i})">${i}</button>
+    `;
+    loadData += 4;
+    dataSkip += 4;
+  }
+  // Update pagination buttons
+  updateActivePageButton();
+}
+
+// Handle pagination button click
+function paginate(pageNumber) {
+  currentPage = pageNumber;
+  const skip = (currentPage - 1) * 4;
+  getData(skip, skip + 4);
+  handlePaginationButtons();
+}
+
+
+displayIndexBtn();
+
+// function next(){
+// console.log(allPaginationBtn)
+// }
+// function prev(){
+
+// }

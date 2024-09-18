@@ -4,3 +4,4 @@
 # delete all button and delete individual button make work
 # edit Button feature introduced
 # search bar is in use with debouncing feature with time 500 ms
+# improved pagination logic and search logic
