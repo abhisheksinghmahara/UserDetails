@@ -12,7 +12,7 @@
 </head>
 
 <body class="body">
-    <h1 class="h1">Employee Data</h1>
+    <!-- <h1 class="h1">Employee Data Register</h1> -->
 
     <!-- add form -->
     <div class="overlay" id="overlay"></div>
@@ -45,33 +45,37 @@
         </button>
     </div>
     <div class="container" id="container">
-        <!-- top buttons -->
-        <div class="container1">
-            <button class="addBtn" id="addBtn" data-bs-target="#userForm" onclick="showModal()">
-                Add Data <i class="fa-solid fa-user-plus"> </i>
+        
+        
+        <div< class="container1" >
+            <!-- top buttons -->
+            <div class="top_items">
+                <span class="title_heading">Employee Data</span>
+                <button class="addBtn" id="addBtn" data-bs-target="#userForm" onclick="showModal()">
+                 <i class="fa-solid fa-user-plus"> </i>
             </button>
             <button class="delAllBtn" id="delAllBtn" onclick="deleteAll()">
-                Delete All <i class="fa-regular fa-trash-can"></i>
+                <i class="fa-regular fa-trash-can"></i>
             </button>
-            <input type="search" class="searchbox" placeholder="Search"  oninput="loadFunction()" id="searchbox" /><i
-                class="fa-solid fa-magnifying-glass"></i>
-        </div>
+            <input type="search" class="searchbox" placeholder="Search..."  oninput="loadFunction()" id="searchbox" />
 
-        <div class="container2" id="container2">
+        </div>
+            <div class="inner_Border"> 
+                
             <!-- table showdata -->
-            <table cellspacing="5" cellpadding="4" class="table table-responsive" id="table">
+            <table class="table" id="table">
                 <thead>
-                    <tr>
-                        <th>S.No.</th>
-                        <th>Name</th>
+                  
+                        <!-- <th>S.No.</th> -->
                         <th>Image</th>
+                        <th>Name</th>
                         <th>Age</th>
                         <th>E-mail</th>
                         <th>Phone</th>
                         <th>Post</th>
                         <th>Start Date</th>
-                        <th>Update</th>
-                    </tr>
+                        <th>Action</th>
+                   
                 </thead>
                 <tbody id="tbody">
                     <!-- <tr >
@@ -93,11 +97,16 @@
                 </tbody>
             </table>
         </div>
-
+        </div>
+        <div class="footer" id="footer">
+            <div id="description" class="description"></div>
+            <div><button class="navigate"  onclick="prev()">Prev</button></div>
+          <div class="paginationButtons" id="paginationButtons"></div>
+            <div><button class="navigate" onclick="next()">Next</button></div>
+        </div>
         <!-- <div class="modalAdd">
             <h1>User Details</h1>
            <form>
-            
             <label for="SNo">S.No:</label>
             <input type="text" /><br>
             <label for="Name">Name:</label>
